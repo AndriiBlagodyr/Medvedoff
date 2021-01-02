@@ -88,14 +88,18 @@ jobs:
       - run:
           name: Deploy to AWS S3
           command: |
+            echo ${CIRCLE_BRANCH}
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_PRODUCTION} --delete
+              echo s3://${AWS_BUCKET_PRODUCTION}
+              aws --region ${AWS_REGION} s3 sync ~/repo/build/ s3://${AWS_BUCKET_PRODUCTION} --delete
             elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_STAGING} --delete
+              echo s3://${AWS_BUCKET_STAGING}
+              aws --region ${AWS_REGION} s3 sync ~/repo/build/ s3://${AWS_BUCKET_STAGING} --delete
             else
-              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_DEV} --delete
+              echo s3://${AWS_BUCKET_DEV}
+              aws --region ${AWS_REGION} s3 sync ~/repo/build/ s3://${AWS_BUCKET_DEV} --delete
             fi
 
   deploy-to-aws-cloudfront:
