@@ -92,14 +92,14 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
               echo s3://${AWS_BUCKET_PRODUCTION}
-              aws --region ${AWS_REGION} s3 sync ~/repo/build/ s3://${AWS_BUCKET_PRODUCTION} --delete
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_PRODUCTION} --delete
             elif [ "${CIRCLE_BRANCH}" == "staging" ]
             then
               echo s3://${AWS_BUCKET_STAGING}
-              aws --region ${AWS_REGION} s3 sync ~/repo/build/ s3://${AWS_BUCKET_STAGING} --delete
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_STAGING} --delete
             else
               echo s3://${AWS_BUCKET_DEV}
-              aws --region ${AWS_REGION} s3 sync ~/repo/build/ s3://${AWS_BUCKET_DEV} --delete
+              aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_BUCKET_DEV} --delete
             fi
 
   deploy-to-aws-cloudfront:
@@ -166,15 +166,6 @@ workflows:
       - deploy-to-aws-cloudfront:
           requires:
             - build
-          filters:
-            branches:
-              only:
-                - develop
-                - staging
-                - master
-      - notify-via-slack:
-          requires:
-            - deploy-to-aws-cloudfront
           filters:
             branches:
               only:
