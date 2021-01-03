@@ -123,14 +123,36 @@ jobs:
               aws cloudfront create-invalidation --distribution-id ${DEV_DISTRIBUTION_ID} --paths /\*
             fi
 
+  deploy-to-heroku:
+    docker:
+      - image: circleci/node:12.18.0
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Show current branch
+          command: echo "${CIRCLE_BRANCH}"
+      - run:
+          name: Deploy to Heroku
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]
+            then
+              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/medvedoff-app-production.git ${CIRCLE_BRANCH}:master -f
+            elif [ "${CIRCLE_BRANCH}" == "staging" ]
+            then
+              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/medvedoff-app-staging.git ${CIRCLE_BRANCH}:master -f
+            else
+              git push https://heroku:$HEROKU_API_KEY@git.heroku.com/medvedoff-app-dev.git ${CIRCLE_BRANCH}:master -f
+            fi
+
   notify-via-slack:
     executor: slack-executor
     steps:
       - slack/notify:
           message: "${CIRCLE_BRANCH} branch deployment to aws s3 and cloudfront is complete."
-          webhook: $CIRCLECI_SLACK_WEBHOOK
+          webhook: $SLACK_WEBHOOK
       - slack/status:
-          webhook: $CIRCLECI_SLACK_WEBHOOK
+          webhook: $SLACK_WEBHOOK
 
 workflows:
   build_and_deploy:
@@ -166,6 +188,15 @@ workflows:
       - deploy-to-aws-cloudfront:
           requires:
             - build
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
+      - notify-via-slack:
+          requires:
+            - deploy-to-aws-cloudfront
           filters:
             branches:
               only:
