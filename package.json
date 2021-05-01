@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@tensorflow-models/body-pix": "^2.1.0",
+    "@tensorflow/tfjs": "^3.5.0",
     "axios": "^0.21.1",
     "cross-env": "^7.0.3",
     "lodash": "^4.17.15",
@@ -10,6 +12,7 @@
     "react-app-polyfill": "^2.0.0",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.1",
+    "react-webcam": "^5.2.3",
     "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
