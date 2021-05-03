@@ -22,6 +22,8 @@ class App extends React.Component {
 	canvasRef = React.createRef();
 
 	componentDidMount() {
+		// eslint-disable-next-line
+		console.log(navigator);
 		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 			const webCamPromise = navigator.mediaDevices
 				.getUserMedia({
@@ -119,13 +121,13 @@ class App extends React.Component {
 						ref={this.videoRef}
 						width="480"
 						height="480"
-						style={{ borderColor: 'transparent' }}
+						style={{ borderColor: 'transparent', marginLeft: '100px' }}
 					/>
 					<canvas
 						ref={this.canvasRef}
 						width="960"
 						height="480"
-						style={{ marginLeft: '-260px', position: 'relative', top: '-25px' }}
+						style={{ marginLeft: '-380px', position: 'relative', top: '-25px' }}
 					/>
 				</div>
 			</div>

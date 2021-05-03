@@ -48,7 +48,9 @@ section {
 }
 
 body {
-	background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+	background: url(/src/images/img2.png) top left no-repeat, url(/src/images/img4.png) top right no-repeat,
+		url(/src/images/img7.png) bottom left no-repeat, url(/src/images/img6.png) bottom right no-repeat,
+		linear-gradient(to right, #43e97b 0%, #38f9d7 100%) repeat;
 }
 h1 {
 	color: rgba(0, 0, 0, 0.6);
