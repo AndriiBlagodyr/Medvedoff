@@ -6,8 +6,7 @@ tf.setBackend('webgl');
 const pascalvoc = [
 	[0, 0, 0],
 	[128, 0, 0],
-	[0, 128, 0],
-	[128, 128, 0]
+	[0, 128, 0]
 ];
 
 async function load_model() {
