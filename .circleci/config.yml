@@ -215,8 +215,6 @@ workflows:
       - unit-test:
           requires:
             - build
-            - linting
-            - prettier
           filters:
             branches:
               only:
