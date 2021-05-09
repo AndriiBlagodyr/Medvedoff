@@ -214,7 +214,8 @@ workflows:
                 - master
       - unit-test:
           requires:
-            - build
+            - linting
+            - prettier
           filters:
             branches:
               only:
@@ -232,9 +233,7 @@ workflows:
                 - master
       - deploy-to-aws-s3:
           requires:
-            - prettier
             - unit-test
-            - linting
           filters:
             branches:
               only:
@@ -243,9 +242,7 @@ workflows:
                 - master
       - deploy-to-aws-cloudfront:
           requires:
-            - prettier
             - unit-test
-            - linting
           filters:
             branches:
               only:
@@ -255,6 +252,7 @@ workflows:
       - notify-via-slack:
           requires:
             - deploy-to-aws-cloudfront
+            - deploy-to-aws-s3
           filters:
             branches:
               only:
